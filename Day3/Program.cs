@@ -29,5 +29,24 @@ foreach(var line in lines) {
             score += (1+i);
     }      
 } 
-
 Console.Out.WriteLine(score);
+
+score = 0;
+// Part 2
+
+for (int i=0;i<lines.Length;i+=6) {
+    int[] common = new int[52] { 1 };
+    int[] primes = {3,5,7};
+
+    // Add primes 3 5 7
+    for (int j=0;j<3;++j) {
+        for (int k=0;k<lines[i+j].Length;++k) {
+            var item = lines[i+j+k];
+            var idx = Char.IsLower(item) ? item - 'a' : 26 + item - 'A';
+            common[idx] += primes[j];
+        }
+        
+        
+    }
+
+}
