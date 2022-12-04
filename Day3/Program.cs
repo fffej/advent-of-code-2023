@@ -31,22 +31,38 @@ foreach(var line in lines) {
 } 
 Console.Out.WriteLine(score);
 
-score = 0;
 // Part 2
-
+score = 0;
 for (int i=0;i<lines.Length;i+=6) {
-    int[] common = new int[52] { 1 };
-    int[] primes = {3,5,7};
 
-    // Add primes 3 5 7
+    int[] common = new int[52];
+
     for (int j=0;j<3;++j) {
         for (int k=0;k<lines[i+j].Length;++k) {
-            var item = lines[i+j+k];
+            var item = lines[i+j][k];
             var idx = Char.IsLower(item) ? item - 'a' : 26 + item - 'A';
-            common[idx] += primes[j];
-        }
-        
-        
+
+            common[idx] |= (1 << j);
+        }            
     }
 
+    for (int k=0;k<common.Length;++k) 
+        if (common[k] == 7)
+            score += 1+k;
+
+    Array.Fill(common,0);
+    for (int j=3;j<6;++j) {
+        for (int k=0;k<lines[i+j].Length;++k) {
+            var item = lines[i+j][k];
+            var idx = Char.IsLower(item) ? item - 'a' : 26 + item - 'A';
+            
+            common[idx] |= 1 << (j-3);
+        }            
+    }
+
+    for (int k=0;k<common.Length;++k) 
+        if (common[k] == 7)
+            score += 1+k;
 }
+
+Console.Out.WriteLine(score);
