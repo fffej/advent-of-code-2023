@@ -16,7 +16,7 @@ int FindMarker(string line, int n) {
     for (int i=0;i<n;++i) 
         buf.AddLast(line[i]);
 
-    for (int i=4;i<line.Length;++i) {
+    for (int i=n;i<line.Length;++i) {
         
         if (Distinct(buf,n)) {
             return i;
