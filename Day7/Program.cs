@@ -35,6 +35,7 @@ foreach(var line in lines) {
     }
 }
 
+// Part 1
 Stack<DirNode> toVisit = new ();
 toVisit.Push(root);
 int sum = 0;
@@ -56,6 +57,39 @@ while (toVisit.Count != 0) {
 
 Console.Out.WriteLine("Size: " + sum);
 
+// Part 2
+const int freespaceNeeded = 30000000;
+const int totalSize = 70000000;
+
+int target = freespaceNeeded - (totalSize - root.Size());
+
+toVisit.Clear();
+toVisit.Push(root);
+
+int minDist = Int32.MaxValue;
+var minDirSize = Int32.MaxValue; 
+
+while (toVisit.Count != 0) {
+
+    var node = toVisit.Pop();
+    var size = node.Size();
+    
+    if (size > target) {
+        var x  = size - target;
+        if (x < minDist) {
+            minDist = x;
+            minDirSize = size;
+        }
+    }
+
+    foreach(var c in node.Children) {
+        if (c is DirNode) {
+            toVisit.Push((DirNode)c);
+        }
+    }
+}
+
+Console.Out.WriteLine("Part 2: " + minDirSize);
 
 abstract class Node {
 
